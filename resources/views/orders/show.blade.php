@@ -3,8 +3,8 @@
 @section('content')
 <div class="row mb-4">
     <div class="col-12">
-        <h1>Order #{{ $order->id }}</h1>
-        <p class="text-muted">Placed on {{ $order->created_at->format('F j, Y \a\t g:i a') }}</p>
+        <h1>Pedido #{{ $order->id }}</h1>
+        <p class="text-muted">Realizado em {{ $order->created_at->format('d \\de F \\de Y \\à\\s H:i') }}</p>
     </div>
 </div>
 
@@ -12,15 +12,15 @@
     <div class="col-md-6">
         <div class="card">
             <div class="card-header">
-                <h4>Order Details</h4>
+                <h4>Detalhes do Pedido</h4>
             </div>
             <div class="card-body">
                 <p><strong>Status:</strong> 
                     <span class="badge bg-{{ $order->status == 'completed' ? 'success' : 'warning' }}">
-                        {{ ucfirst($order->status) }}
+                        {{ $order->status == 'completed' ? 'Concluído' : 'Pendente' }}
                     </span>
                 </p>
-                <p><strong>Total:</strong> ${{ number_format($order->total, 2) }}</p>
+                <p><strong>Total:</strong> R$ {{ number_format($order->total, 2, ',', '.') }}</p>
             </div>
         </div>
     </div>
@@ -30,15 +30,15 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h4>Order Items</h4>
+                <h4>Itens do Pedido</h4>
             </div>
             <div class="card-body">
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Product</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
+                            <th>Produto</th>
+                            <th>Preço</th>
+                            <th>Quantidade</th>
                             <th>Total</th>
                         </tr>
                     </thead>
@@ -46,16 +46,16 @@
                         @foreach($order->items as $item)
                         <tr>
                             <td>{{ $item->product->model }}</td>
-                            <td>${{ number_format($item->price, 2) }}</td>
+                            <td>R$ {{ number_format($item->price, 2, ',', '.') }}</td>
                             <td>{{ $item->quantity }}</td>
-                            <td>${{ number_format($item->price * $item->quantity, 2) }}</td>
+                            <td>R$ {{ number_format($item->price * $item->quantity, 2, ',', '.') }}</td>
                         </tr>
                         @endforeach
                     </tbody>
                     <tfoot>
                         <tr>
                             <td colspan="3" class="text-end"><strong>Total:</strong></td>
-                            <td>${{ number_format($order->total, 2) }}</td>
+                            <td>R$ {{ number_format($order->total, 2, ',', '.') }}</td>
                         </tr>
                     </tfoot>
                 </table>

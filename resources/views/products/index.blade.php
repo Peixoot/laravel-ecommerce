@@ -3,7 +3,7 @@
 @section('content')
 <div class="row mb-4">
     <div class="col-12">
-        <h1>Our Products</h1>
+        <h1>Nossos Produtos</h1>
     </div>
 </div>
 
@@ -11,17 +11,17 @@
     @foreach($products as $product)
     <div class="col-md-4 mb-4">
         <div class="card h-100">
-            <img src="{{ $product->image ? Storage::url('products/' . $product->image) : 'https://via.placeholder.com/400x300' }}" class="card-img-top img-product-card" alt="{{ $product->name }}">
+            <img src="{{ $product->image ? '/images/' . $product->image : 'https://via.placeholder.com/400x300' }}" class="card-img-top img-product-card" alt="{{ $product->name }}">
             <div class="card-body">
                 <h5 class="card-title">{{ $product->model }}</h5>
                 <p class="card-text">{{ Str::limit($product->description, 100) }}</p>
                 <p class="h5">${{ number_format($product->price, 2) }}</p>
             </div>
             <div class="card-footer bg-white">
-                <a href="{{ route('products.show', $product) }}" class="btn btn-primary">View Details</a>
+                <a href="{{ route('products.show', $product) }}" class="btn btn-primary">Ver Detalhes</a>
                 <form action="{{ route('cart.add', $product) }}" method="POST" class="d-inline">
                     @csrf
-                    <button type="submit" class="btn btn-success">Add to Cart</button>
+                    <button type="submit" class="btn btn-success">Adicionar ao Carrinho</button>
                 </form>
             </div>
         </div>
